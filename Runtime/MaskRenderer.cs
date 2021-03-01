@@ -9,8 +9,10 @@ namespace TAO.InteractiveMask
 		public Shader clearBlit = null;
 		private Material clearBlitMaterial;
 		// Camera source.
+		[HideInInspector]
 		public RenderTexture source = null;
 		// Output target.
+		[HideInInspector]
 		public RenderTexture target = null;
 
 		public Layer[] layers;
@@ -118,10 +120,10 @@ namespace TAO.InteractiveMask
 	{
 		public static int LayerCount = 0;
 
-		public Type type;
-		public Shader blit;
-		private Material blitMaterial;
-		public Vector4 channels;
+		public Type type = Type.Clear;
+		public Mask mask = new Mask();
+		public Shader blit = null;
+		private Material blitMaterial = null;
 
 		// Only when mode is persistent.
 		public Shader persistentBlit;
@@ -149,7 +151,6 @@ namespace TAO.InteractiveMask
 							{
 								name = LayerCount.ToString()
 							};
-							LayerCount++;
 						}
 
 						persistentBlitMaterial.SetTexture("_Source", source);
@@ -161,7 +162,9 @@ namespace TAO.InteractiveMask
 			}
 
 			blitMaterial.SetTexture("_Source", source);
-			blitMaterial.SetVector("_Channels", channels);
+			blitMaterial.SetVector("_Channels", mask.GetMaskVector);
+
+			LayerCount++;
 		}
 
 		public void Blit(RenderTexture source, RenderTexture target)
@@ -188,6 +191,20 @@ namespace TAO.InteractiveMask
 		{
 			Clear,
 			Persistent
+		}
+	}
+
+	[System.Serializable]
+	public struct Mask
+	{
+		public bool r;
+		public bool g;
+		public bool b;
+		public bool a;
+
+		public Vector4 GetMaskVector
+		{
+			get { return new Vector4(r ? 1 : 0, g ? 1 : 0, b ? 1 : 0, a ? 1 : 0); }
 		}
 	}
 }
