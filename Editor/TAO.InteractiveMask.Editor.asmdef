@@ -1,7 +1,8 @@
 {
-    "name": "COMPANYNAME.PACKAGENAME.Editor",
+    "name": "TAO.InteractiveMask.Editor",
+    "rootNamespace": "TAO.InteractiveMask.Editor",
     "references": [
-        "COMPANYNAME.PACKAGENAME"
+        "TAO.InteractiveMask"
     ],
     "includePlatforms": [
         "Editor"
@@ -12,5 +13,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -1,5 +1,6 @@
 {
-    "name": "COMPANYNAME.PACKAGENAME",
+    "name": "TAO.InteractiveMask",
+    "rootNamespace": "TAO.InteractiveMask",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -8,5 +9,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [],
+    "noEngineReferences": false
 }

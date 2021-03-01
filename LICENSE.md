@@ -1,6 +1,8 @@
 MIT License
 
-Copyright (c) 2020 COMPANYNAME
+Overall package is licensed under MIT, unless otherwise noted in the 3rd party licenses file and/or source code.
+
+Copyright (c) 2021 Tech Art Outsource
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

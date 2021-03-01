@@ -1,6 +1,6 @@
-# [COMPANYNAME]() - PACKAGENAME
+# TECH ART OUTSOURCE - Interactive Mask
 
-Description.
+Interactive mask setup.
 
 ## Install
 
