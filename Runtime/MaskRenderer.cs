@@ -37,6 +37,17 @@ namespace TAO.InteractiveMask
 			}
 		}
 
+		// Clears the context of the render targets.
+		public void Clear()
+		{
+			Graphics.Blit(target, target, clearBlitMaterial);
+
+			foreach (Layer layer in layers)
+			{
+				layer.Clear(clearBlitMaterial);
+			}
+		}
+
 		private void OnValidate()
 		{
 			if (clearBlit == null)
@@ -61,29 +72,26 @@ namespace TAO.InteractiveMask
 			}
 		}
 
-		private void OnGUI()
+		public void GUI()
 		{
-			if (debugGui)
+			using (new GUILayout.HorizontalScope())
 			{
-				using (new GUILayout.HorizontalScope())
-				{
-					GUITexture(source);
-					GUITexture(target);
+				GUITexture(source);
+				GUITexture(target);
 
-					foreach (var l in layers)
+				foreach (var l in layers)
+				{
+					switch (l.type)
 					{
-						switch (l.type)
-						{
-							case Layer.Type.Clear:
-								break;
-							case Layer.Type.Persistent:
-								{
-									GUITexture(l.PersistentTarget);
-								}
-								break;
-							default:
-								break;
-						}
+						case Layer.Type.Clear:
+							break;
+						case Layer.Type.Persistent:
+							{
+								GUITexture(l.PersistentTarget);
+							}
+							break;
+						default:
+							break;
 					}
 				}
 			}
@@ -168,6 +176,14 @@ namespace TAO.InteractiveMask
 					break;
 				default:
 					break;
+			}
+		}
+
+		public void Clear(Material clearBlit)
+		{
+			if (PersistentTarget)
+			{
+				Graphics.Blit(PersistentTarget, PersistentTarget, clearBlit);
 			}
 		}
 

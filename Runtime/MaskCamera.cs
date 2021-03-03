@@ -18,6 +18,7 @@ namespace TAO.InteractiveMask
 		public List<Material> materials = new List<Material>();
 
 		private int targetWidth = 0;
+		public bool debugGui = false;
 
 		private void Awake()
 		{
@@ -66,6 +67,30 @@ namespace TAO.InteractiveMask
 			newPos.y = maskCamera.transform.position.y;
 			newPos.z = (Mathf.Floor(maskCamera.transform.position.z / pws) + 0.5f) * pws;
 			maskCamera.transform.position = newPos;
+		}
+
+		private void OnGUI()
+		{
+			if (debugGui)
+			{
+				using (new GUILayout.VerticalScope())
+				{
+					using (new GUILayout.HorizontalScope())
+					{
+						if (GUILayout.Button("Render"))
+						{
+							Render();
+						}
+
+						if (GUILayout.Button("MaskRenderer.Clear"))
+						{
+							maskRenderer.Clear();
+						}
+					}
+				}
+
+				maskRenderer.GUI();
+			}
 		}
 
 		public enum Mode
