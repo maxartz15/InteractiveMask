@@ -4,8 +4,6 @@ namespace TAO.InteractiveMask
 {
 	public class MaskRenderer : MonoBehaviour
 	{
-		public Mode mode = Mode.EachFrame;
-
 		public Shader clearBlit = null;
 		private Material clearBlitMaterial;
 		// Camera source.
@@ -19,21 +17,13 @@ namespace TAO.InteractiveMask
 
 		public bool debugGui = false;
 
-		public void Awake()
+		public void Init()
 		{
 			clearBlitMaterial = new Material(clearBlit);
 
 			foreach (Layer layer in layers)
 			{
 				layer.Init(source, target);
-			}
-		}
-
-		private void Update()
-		{
-			if (mode == Mode.EachFrame)
-			{
-				Render();
 			}
 		}
 
@@ -106,12 +96,6 @@ namespace TAO.InteractiveMask
 				GUILayout.Label(texture, GUILayout.Width(256), GUILayout.Height(256));
 				GUILayout.Label(string.Format("{0}\n{1}x{2}\n{3}", texture.name, texture.width, texture.height, texture.graphicsFormat));
 			}
-		}
-
-		public enum Mode
-		{
-			EachFrame,
-			Manual
 		}
 	}
 

@@ -3,7 +3,10 @@ guid: c7ace5587b33c154490f78c11ec9a297
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - clearBlit: {fileID: 4800000, guid: 612652bd41e196b408fe733989b1d223, type: 3}
+  - source: {instanceID: 0}
+  - target: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
