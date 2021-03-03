@@ -16,5 +16,12 @@
   "keywords": [
     "tech art outsource",
     "interactive mask"
+  ],
+  "samples": [
+    {
+      "displayName": "Example 1",
+      "description": "Mask setup example.",
+      "path": "Samples~/Example1"
+    }
   ]
 }
