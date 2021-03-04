@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace TAO.InteractiveMask
@@ -70,6 +71,14 @@ namespace TAO.InteractiveMask
 			}
 		}
 
+		public void Release()
+		{
+			foreach (Layer layer in layers)
+			{
+				layer.Release();
+			}
+		}
+
 		public void GUI()
 		{
 			using (new GUILayout.HorizontalScope())
@@ -100,7 +109,7 @@ namespace TAO.InteractiveMask
 			using (new GUILayout.VerticalScope())
 			{
 				GUILayout.Label(texture, GUILayout.Width(256), GUILayout.Height(256));
-				GUILayout.Label(string.Format("{0}\n{1}x{2}\n{3}", texture.name, texture.width, texture.height, texture.graphicsFormat));
+				GUILayout.Label(string.Format("{0}\n{1}x{2}\n{3}\n{4}", texture.name, texture.width, texture.height, texture.graphicsFormat, target.format));
 			}
 		}
 	}
@@ -182,6 +191,14 @@ namespace TAO.InteractiveMask
 			if (PersistentTarget)
 			{
 				Graphics.Blit(PersistentTarget, PersistentTarget, clearBlit);
+			}
+		}
+
+		public void Release()
+		{
+			if (PersistentTarget)
+			{
+				PersistentTarget.Release();
 			}
 		}
 

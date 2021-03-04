@@ -6,41 +6,79 @@ namespace TAO.InteractiveMask
 	[RequireComponent(typeof(MaskRenderer))]
 	public class MaskCamera : MonoBehaviour
 	{
-		public Mode mode = Mode.EachFrame;
+		public Mode mode = Mode.Auto;
 
 		[SerializeField]
 		private Camera maskCamera = null;
 		private MaskRenderer maskRenderer = null;
 
-		public RenderTexture target = null;
+		[SerializeField]
+		private int resolution = 512;
+		[SerializeField]
+		private RenderTextureFormat format = RenderTextureFormat.Default;
+		public RenderTexture Target
+		{
+			get; private set;
+		}
 		private RenderTexture source = null;
 
 		public List<Material> materials = new List<Material>();
-
-		private int targetWidth = 0;
 		public bool debugGui = false;
 
 		private void Awake()
 		{
-			maskRenderer = GetComponent<MaskRenderer>();
-
-			source = new RenderTexture(target);
+			Target = CreateRenderTexture(resolution, format);
+			source = new RenderTexture(Target);
 
 			maskCamera.targetTexture = source;
 
-			maskRenderer.target = target;
+			switch (mode)
+			{
+				case Mode.Auto:
+					{
+						maskCamera.enabled = true;
+					}
+					break;
+				case Mode.Manual:
+					{
+						maskCamera.enabled = false;
+					}
+					break;
+				default:
+					break;
+			}
+
+			maskRenderer = GetComponent<MaskRenderer>();
+			maskRenderer.target = Target;
 			maskRenderer.source = source;
-
-			targetWidth = target.width;
-
 			maskRenderer.Init();
+
+			foreach (var m in materials)
+			{
+				m.SetTexture("_Mask", Target);
+			}
 		}
 
-		private void Update()
+		private void OnDestroy()
 		{
-			if (mode == Mode.EachFrame)
+			Target.Release();
+			source.Release();
+			maskRenderer.Release();
+		}
+
+		private void LateUpdate()
+		{
+			switch (mode)
 			{
-				Render();
+				case Mode.Auto:
+					{
+						Render();
+					}
+					break;
+				case Mode.Manual:
+					break;
+				default:
+					break;
 			}
 		}
 
@@ -48,7 +86,19 @@ namespace TAO.InteractiveMask
 		{
 			SnapCameraPosition();
 
-			maskCamera.Render();
+			switch (mode)
+			{
+				case Mode.Auto:
+					break;
+				case Mode.Manual:
+					{
+						maskCamera.Render();
+					}
+					break;
+				default:
+					break;
+			}
+
 			maskRenderer.Render();
 
 			foreach (var m in materials)
@@ -59,7 +109,7 @@ namespace TAO.InteractiveMask
 
 		private void SnapCameraPosition()
 		{
-			float pws = (1.0f / targetWidth) * maskCamera.orthographicSize;
+			float pws = (1.0f / resolution) * maskCamera.orthographicSize;
 
 			// Snap position to pixel.
 			Vector3 newPos = Vector3.zero;
@@ -67,6 +117,14 @@ namespace TAO.InteractiveMask
 			newPos.y = maskCamera.transform.position.y;
 			newPos.z = (Mathf.Floor(maskCamera.transform.position.z / pws) + 0.5f) * pws;
 			maskCamera.transform.position = newPos;
+		}
+
+		public static RenderTexture CreateRenderTexture(int resolution, RenderTextureFormat format)
+		{
+			var rt = new RenderTexture(resolution, resolution, 0, format, 0);
+			rt.Create();
+
+			return rt;
 		}
 
 		private void OnGUI()
@@ -95,7 +153,7 @@ namespace TAO.InteractiveMask
 
 		public enum Mode
 		{
-			EachFrame,
+			Auto,
 			Manual
 		}
 	}
