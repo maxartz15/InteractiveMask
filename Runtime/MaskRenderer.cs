@@ -15,8 +15,6 @@ namespace TAO.InteractiveMask
 
 		public Layer[] layers;
 
-		public bool debugGui = false;
-
 		public void Init()
 		{
 			clearBlitMaterial = new Material(clearBlit);
