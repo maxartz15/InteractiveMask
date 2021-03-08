@@ -119,6 +119,7 @@ namespace TAO.InteractiveMask
 	{
 		public static int LayerCount = 0;
 
+		public bool enabled = true;
 		public Type type = Type.Clear;
 		public Mask mask = new Mask();
 		public Shader blit = null;
@@ -168,6 +169,11 @@ namespace TAO.InteractiveMask
 
 		public void Blit(RenderTexture source, RenderTexture target)
 		{
+			if (!enabled)
+			{
+				return;
+			}
+
 			switch (type)
 			{
 				case Type.Clear:
