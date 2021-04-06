@@ -47,9 +47,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   maskCamera: {fileID: 354132074141824159}
-  target: {fileID: 8400000, guid: 6dbf8770b857bc143a3ebf8ac17ff43a, type: 2}
+  resolution: 512
+  format: 7
   materials:
   - {fileID: 2100000, guid: 09e65b1866e39d74488b8a13aa9e21a7, type: 2}
+  debugGui: 1
 --- !u!114 &354132074049328697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,17 +66,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clearBlit: {fileID: 4800000, guid: 612652bd41e196b408fe733989b1d223, type: 3}
   source: {fileID: 0}
-  target: {fileID: 8400000, guid: 6dbf8770b857bc143a3ebf8ac17ff43a, type: 2}
+  target: {fileID: 0}
   layers:
-  - type: 0
+  - enabled: 1
+    type: 0
     mask:
       r: 1
-      g: 1
+      g: 0
       b: 1
       a: 1
     blit: {fileID: 4800000, guid: b56b79d9c9a85fb45bf1a263d73bd938, type: 3}
     persistentBlit: {fileID: 4800000, guid: 794c349d1ba10d34c86b6dd5c2b8bb7e, type: 3}
-  debugGui: 1
+  - enabled: 1
+    type: 1
+    mask:
+      r: 0
+      g: 1
+      b: 0
+      a: 0
+    blit: {fileID: 4800000, guid: b56b79d9c9a85fb45bf1a263d73bd938, type: 3}
+    persistentBlit: {fileID: 4800000, guid: 794c349d1ba10d34c86b6dd5c2b8bb7e, type: 3}
 --- !u!1 &354132074141824156
 GameObject:
   m_ObjectHideFlags: 0
