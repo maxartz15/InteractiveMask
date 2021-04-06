@@ -1,7 +1,7 @@
 {
   "name": "com.tech_art_outsource.interactive_mask",
   "displayName": "TAO Interactive Mask",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "unity": "2020.2",
   "unityRelease": "1f1",
   "description": "A tool to setup interactive masks.",
