@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 
 namespace TAO.InteractiveMask
@@ -22,7 +23,11 @@ namespace TAO.InteractiveMask
 		}
 		private RenderTexture source = null;
 
-		public List<Material> materials = new List<Material>();
+		[SerializeField]
+		private string maskTextureGlobalParameterName = "_TAO_Mask";
+		[SerializeField]
+		private string maskDataGlobalParameterName = "_TAO_MaskData";
+
 		public bool debugGui = false;
 
 		private void Awake()
@@ -53,10 +58,8 @@ namespace TAO.InteractiveMask
 			maskRenderer.source = source;
 			maskRenderer.Init();
 
-			foreach (var m in materials)
-			{
-				m.SetTexture("_Mask", Target);
-			}
+			// Set texture.
+			Shader.SetGlobalTexture(maskTextureGlobalParameterName, Target);
 		}
 
 		private void OnDestroy()
@@ -101,10 +104,8 @@ namespace TAO.InteractiveMask
 
 			maskRenderer.Render();
 
-			foreach (var m in materials)
-			{
-				m.SetVector("_MaskData", new Vector4(maskCamera.transform.position.x, maskCamera.transform.position.z, maskCamera.orthographicSize, 0));
-			}
+			// Set data.
+			Shader.SetGlobalVector(maskDataGlobalParameterName, new Vector4(maskCamera.transform.position.x, maskCamera.transform.position.z, maskCamera.orthographicSize, 0));
 		}
 
 		private void SnapCameraPosition()
